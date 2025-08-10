@@ -1,20 +1,15 @@
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import BookSection from '@/_components/section/BookSection';
+import MobileSection from '@/_components/section/MobileSection';
 
 export default function Home() {
   return (
-    <div>
-      <h1 className={geistSans.className}>Welcome to the Multi-Step Form</h1>
-      <p className={geistMono.className}>Please fill out the following steps:</p>
+    <div className="min-h-screen flex">
+      <div className="w-full lg:w-1/2 flex p-[20px]">
+        <BookSection />
+      </div>
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
+        <MobileSection />
+      </div>
     </div>
   );
 }
