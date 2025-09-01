@@ -8,6 +8,8 @@ interface InputProps {
   placeholder?: string;
   className?: string;
   required?: boolean;
+  disabled?: boolean;
+  min?: string;
 }
 
 export default function Input({
@@ -17,6 +19,8 @@ export default function Input({
   placeholder,
   className = 'border p-2 w-full',
   required = false,
+  disabled = false,
+  min,
 }: InputProps) {
   const { register } = useFormContext();
 
@@ -30,8 +34,10 @@ export default function Input({
         id={name}
         type={type}
         {...register(name)}
-        className={className}
+        className={`${className} ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
         placeholder={placeholder}
+        disabled={disabled}
+        min={min}
       />
     </div>
   );

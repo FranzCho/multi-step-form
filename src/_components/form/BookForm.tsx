@@ -19,7 +19,7 @@ export default function BookForm({ setPreview }: Props) {
   const watchAll = watch();
 
   const watchAllString = JSON.stringify(watchAll);
-  const memoizedWatchAll = useMemo(() => watchAll, [watchAll, watchAllString]);
+  const memoizedWatchAll = useMemo(() => watchAll, [watchAllString]);
 
   useEffect(() => {
     setPreview(memoizedWatchAll);
