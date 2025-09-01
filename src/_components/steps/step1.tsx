@@ -8,6 +8,7 @@ import { READING_STATUS_OPTIONS, READING_STATUS } from '../../utils/constants';
 export default function Step1() {
   const { watch } = useFormContext();
   const readingStatus = watch('readingStatus');
+  const publicationDate = watch('publicationDate');
 
   const getDateRangeProps = () => {
     switch (readingStatus) {
@@ -40,23 +41,24 @@ export default function Step1() {
         label="도서 제목"
         placeholder="도서 제목을 입력하세요"
       />
+      <Input
+        name="publicationDate"
+        label="도서 출판일"
+        type="date"
+        placeholder="도서 출판일을 입력하세요"
+      />
       <DateRange
         startName="readingStartDate"
         endName="readingEndDate"
         label="독서 기간"
         startDisabled={startDisabled}
         endDisabled={endDisabled}
+        startMinDate={publicationDate}
       />
       <Input
         name="author"
         label="도서 작가"
         placeholder="도서 작가를 입력하세요"
-      />
-      <Input
-        name="publicationDate"
-        label="도서 출판일"
-        type="date"
-        placeholder="도서 출판일을 입력하세요"
       />
     </div>
   );

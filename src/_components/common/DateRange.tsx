@@ -12,6 +12,7 @@ interface DateRangeProps {
   className?: string;
   startDisabled?: boolean;
   endDisabled?: boolean;
+  startMinDate?: string;
 }
 
 export default function DateRange({
@@ -24,12 +25,12 @@ export default function DateRange({
   className = '',
   startDisabled = false,
   endDisabled = false,
+  startMinDate,
 }: DateRangeProps) {
   const { watch, setValue } = useFormContext();
   const startDate = watch(startName);
   const endDate = watch(endName);
 
-  // 종료일이 시작일보다 이전인 경우 자동 수정
   React.useEffect(() => {
     if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
       setValue(endName, startDate);
@@ -49,6 +50,7 @@ export default function DateRange({
           type="date"
           placeholder=""
           disabled={startDisabled}
+          min={startMinDate}
         />
         <Input
           name={endName}

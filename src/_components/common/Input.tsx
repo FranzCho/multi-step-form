@@ -10,6 +10,7 @@ interface InputProps {
   required?: boolean;
   disabled?: boolean;
   min?: string;
+  height?: string;
 }
 
 export default function Input({
@@ -21,6 +22,7 @@ export default function Input({
   required = false,
   disabled = false,
   min,
+  height,
 }: InputProps) {
   const { register } = useFormContext();
 
@@ -38,6 +40,7 @@ export default function Input({
         placeholder={placeholder}
         disabled={disabled}
         min={min}
+        style={{ height: height }}
       />
     </div>
   );

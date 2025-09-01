@@ -1,4 +1,6 @@
+import { useFormContext } from 'react-hook-form';
 import StepButton from '../common/button/StepButton';
+import { validateUpToStep } from '../../utils/stepValidation';
 
 interface StepBarProps {
   currentStep: number;
@@ -14,6 +16,23 @@ const steps = [
 ];
 
 export default function StepBar({ currentStep, setCurrentStep }: StepBarProps) {
+  const { watch } = useFormContext();
+  const formData = watch();
+
+  const isStepAccessible = (stepId: number) => {
+    if (stepId === currentStep) return true;
+
+    if (stepId < currentStep) return true;
+
+    return validateUpToStep(stepId - 1, formData);
+  };
+
+  const handleStepClick = (stepId: number) => {
+    if (isStepAccessible(stepId)) {
+      setCurrentStep(stepId);
+    }
+  };
+
   return (
     <div className="flex gap-[20px] p-4">
       {steps.map(({ id, label }) => (
@@ -21,7 +40,8 @@ export default function StepBar({ currentStep, setCurrentStep }: StepBarProps) {
           key={id}
           page={label}
           isActive={currentStep === id}
-          onClick={() => setCurrentStep(id)}
+          disabled={!isStepAccessible(id)}
+          onClick={() => handleStepClick(id)}
         />
       ))}
     </div>
