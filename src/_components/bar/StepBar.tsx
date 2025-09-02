@@ -10,9 +10,9 @@ interface StepBarProps {
 const steps = [
   { id: 1, label: '도서정보' },
   { id: 2, label: '도서 추천여부/별점' },
-  { id: 3, label: '추가설정' },
-  { id: 4, label: '미리보기' },
-  { id: 5, label: '완료' },
+  { id: 3, label: '독후감' },
+  { id: 4, label: '인용구' },
+  { id: 5, label: '공개여부' },
 ];
 
 export default function StepBar({ currentStep, setCurrentStep }: StepBarProps) {
