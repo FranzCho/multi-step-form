@@ -1,40 +1,10 @@
-import { useForm, FormProvider } from 'react-hook-form';
-import { useEffect, useState, useCallback } from 'react';
+import { FormProvider } from 'react-hook-form';
 import BookSection from '@/_components/section/BookSection';
 import MobileSection from '@/_components/section/MobileSection';
+import { useBookForm } from '@/hooks/useBookForm';
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
-  const methods = useForm();
-  const watchAll = methods.watch();
-  const [preview, setPreview] = useState(watchAll);
-
-  const handleSetPreview = useCallback((data: unknown) => {
-    setPreview(data);
-  }, []);
-
-  // 클라이언트 마운트 확인
-  useEffect(() => {
-    setIsClient(true);
-    const saved = localStorage.getItem('bookForm');
-    console.log('복원할 데이터:', saved);
-    if (saved) {
-      const parsedData = JSON.parse(saved);
-      console.log('파싱된 데이터:', parsedData);
-      methods.reset(parsedData);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const handler = setTimeout(() => {
-      setPreview(watchAll);
-      console.log('저장할 데이터:', watchAll);
-      localStorage.setItem('bookForm', JSON.stringify(watchAll));
-    }, 500);
-    return () => clearTimeout(handler);
-  }, [watchAll, isClient]);
+  const { methods, preview, handleSetPreview } = useBookForm();
 
   return (
     <div className="min-h-screen flex">
