@@ -10,6 +10,7 @@ interface InputProps {
   required?: boolean;
   disabled?: boolean;
   min?: string;
+  max?: string;
   height?: string;
 }
 
@@ -22,9 +23,10 @@ export default function Input({
   required = false,
   disabled = false,
   min,
+  max,
   height,
 }: InputProps) {
-  const { register } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
 
   return (
     <div className="mb-4">
@@ -35,13 +37,19 @@ export default function Input({
       <input
         id={name}
         type={type}
-        {...register(name)}
-        className={`${className} ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+        {...register(name, {
+          valueAsNumber: type === 'number',
+        })}
+        className={`${className} ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''} ${errors[name] ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'focus:ring-2 focus:ring-blue-200'}`}
         placeholder={placeholder}
         disabled={disabled}
         min={min}
+        max={max}
         style={{ height: height }}
       />
+      {errors[name] && (
+        <p className="text-red-500 text-sm mt-1">{errors[name]?.message as string}</p>
+      )}
     </div>
   );
 }

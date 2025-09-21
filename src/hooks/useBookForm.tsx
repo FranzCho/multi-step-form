@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm, UseFormReturn } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { bookFormSchema, BookFormData } from '../schemas/bookFormSchema';
 
 export function useBookForm(): {
-  methods: UseFormReturn;
+  methods: UseFormReturn<BookFormData>;
   preview: Record<string, unknown>;
   handleSetPreview: (data: unknown) => void;
   isClient: boolean;
 } {
   const [isClient, setIsClient] = useState(false);
-  const methods = useForm();
+  const methods = useForm<BookFormData>({
+    resolver: zodResolver(bookFormSchema),
+    mode: 'onChange', // 실시간 검증
+  });
   const watchAll = methods.watch();
   const [preview, setPreview] = useState(watchAll);
 
@@ -38,6 +43,22 @@ export function useBookForm(): {
 
     return () => clearTimeout(handler);
   }, [watchAll, isClient]);
+
+  // 첫 번째 에러 필드로 자동 포커스
+  useEffect(() => {
+    const errors = methods.formState.errors;
+    const errorKeys = Object.keys(errors);
+
+    if (errorKeys.length > 0) {
+      const firstErrorField = errorKeys[0];
+      const element = document.querySelector(`[name="${firstErrorField}"]`) as HTMLElement;
+
+      if (element) {
+        element.focus();
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [methods.formState.errors]);
 
   return { methods, preview, handleSetPreview, isClient };
 }

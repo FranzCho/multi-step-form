@@ -21,12 +21,12 @@ export default function RadioGroup({
   className = '',
   required = false,
 }: RadioGroupProps) {
-  const { register } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
 
   return (
     <div className={`mb-4 ${className}`}>
-      <fieldset>
-        <legend className="block mb-2 font-medium">
+      <fieldset className={errors[name] ? 'border-red-300 rounded p-2' : ''}>
+        <legend className={`block mb-2 font-medium ${errors[name] ? 'text-red-500' : ''}`}>
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </legend>
@@ -37,13 +37,16 @@ export default function RadioGroup({
                 type="radio"
                 value={option.value}
                 {...register(name)}
-                className="form-radio h-4 w-4 text-blue-600"
+                className={`form-radio h-4 w-4 ${errors[name] ? 'text-red-600' : 'text-blue-600'}`}
               />
               <span className="text-sm">{option.label}</span>
             </label>
           ))}
         </div>
       </fieldset>
+      {errors[name] && (
+        <p className="text-red-500 text-sm mt-1">{errors[name]?.message as string}</p>
+      )}
     </div>
   );
 }
