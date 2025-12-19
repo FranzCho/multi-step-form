@@ -90,11 +90,7 @@ export default function DateRange({
       </h3>
       {publishDateName && (
         <div className="mb-2">
-          <Input
-            name={publishDateName}
-            label={publishDateLabel}
-            type="date"
-          />
+          <Input name={publishDateName} label={publishDateLabel} type="date" />
           <button
             type="button"
             className="ml-2 px-2 py-1 border rounded text-xs"

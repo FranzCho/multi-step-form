@@ -176,8 +176,12 @@ const step4Schema = z
     }
   });
 
-// Step 5 스키마 (추후 확장)
-const step5Schema = z.object({});
+// Step 5 스키마 - 공개 여부
+const step5Schema = z.object({
+  isPublic: z.enum(['public', 'private'], {
+    required_error: '공개 여부를 선택해주세요',
+  }),
+});
 
 // 전체 폼 스키마
 export const bookFormSchema = z.object({
@@ -206,7 +210,8 @@ export const bookFormSchema = z.object({
     )
     .optional(),
 
-  // 추후 확장을 위한 필드
+  // Step 5 필드들
+  isPublic: z.enum(['public', 'private']).optional(),
 });
 
 // 스텝별 검증 스키마
