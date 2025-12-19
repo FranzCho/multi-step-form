@@ -28,8 +28,7 @@ export default function Step1() {
   const { startDisabled, endDisabled } = getDateRangeProps();
 
   // 읽는 중이면 종료일 필드 숨김
-  const hideEndDate =
-    readingStatus === READING_STATUS.READING;
+  const hideEndDate = readingStatus === READING_STATUS.READING;
 
   return (
     <div className="p-4 max-h-screen overflow-y-auto bg-white">

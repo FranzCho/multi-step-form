@@ -20,3 +20,22 @@ export const READING_STATUS_OPTIONS = Object.entries(READING_STATUS_LABELS).map(
   value,
   label,
 }));
+
+// 공개 여부 관련 상수
+export const VISIBILITY_STATUS = {
+  PUBLIC: 'public',
+  PRIVATE: 'private',
+} as const;
+
+export const VISIBILITY_LABELS = {
+  [VISIBILITY_STATUS.PUBLIC]: '공개',
+  [VISIBILITY_STATUS.PRIVATE]: '비공개',
+} as const;
+
+export type VisibilityStatus = typeof VISIBILITY_STATUS[keyof typeof VISIBILITY_STATUS];
+
+// RadioGroup에서 사용할 공개 여부 옵션 배열
+export const VISIBILITY_OPTIONS = Object.entries(VISIBILITY_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));
